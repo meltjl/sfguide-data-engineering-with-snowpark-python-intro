@@ -8,9 +8,6 @@ Last Updated: 9/26/2023
 -- SNOWFLAKE ADVANTAGE: Data sharing/marketplace (instead of ETL)
 
 
-USE ROLE HOL_ROLE;
-USE WAREHOUSE HOL_WH;
-
 
 -- ----------------------------------------------------------------------------
 -- Step #1: Connect to weather data in Marketplace
@@ -55,5 +52,14 @@ GRANT IMPORTED PRIVILEGES ON DATABASE FROSTBYTE_WEATHERSOURCE TO ROLE HOL_ROLE;
 ---*/
 
 
+USE ROLE ACCOUNTADMIN;
+
+GRANT IMPORTED PRIVILEGES ON DATABASE FROSTBYTE_WEATHERSOURCE TO ROLE HOL_ROLE;
 -- Let's look at the data - same 3-part naming convention as any other table
+
+
+USE ROLE HOL_ROLE;
+USE WAREHOUSE HOL_WH;
+
+
 SELECT * FROM FROSTBYTE_WEATHERSOURCE.ONPOINT_ID.POSTAL_CODES LIMIT 100;

@@ -20,15 +20,18 @@ def get_snowpark_session() -> Session:
     if SnowflakeConnection().connection:
         # Not sure what this does?
         session = SnowflakeConnection().connection
+        print("1. session")
     # if running locally with a config file
     # TODO: Look for a creds.json style file. This should be the way all snowpark
     # related tools work IMO
     # if using snowsql config, like snowcli does
     elif os.path.exists(os.path.expanduser('~/.snowsql/config')):
+        print("2")
         snowpark_config = get_snowsql_config()
         SnowflakeConnection().connection = Session.builder.configs(snowpark_config).create()
     # otherwise configure from environment variables
     elif "SNOWSQL_ACCOUNT" in os.environ:
+        print("3.SNOWSQL_ACCOUNT")
         snowpark_config = {
             "account": os.environ["SNOWSQL_ACCOUNT"],
             "user": os.environ["SNOWSQL_USER"],
@@ -40,6 +43,7 @@ def get_snowpark_session() -> Session:
         }
         SnowflakeConnection().connection = Session.builder.configs(snowpark_config).create()
 
+    print("xxx")
     if SnowflakeConnection().connection:
         return SnowflakeConnection().connection  # type: ignore
     else:

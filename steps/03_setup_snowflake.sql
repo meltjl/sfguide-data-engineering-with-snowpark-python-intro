@@ -20,6 +20,7 @@ Last Updated: 9/26/2023
 -- ----------------------------------------------------------------------------
 USE ROLE ACCOUNTADMIN;
 
+
 -- Roles
 SET MY_USER = CURRENT_USER();
 CREATE OR REPLACE ROLE HOL_ROLE;

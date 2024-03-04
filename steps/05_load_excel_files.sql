@@ -65,8 +65,10 @@ $$;
 -- Step 3: Load the Excel data
 -- ----------------------------------------------------------------------------
 
-CALL LOAD_EXCEL_WORKSHEET_TO_TABLE_SP(BUILD_SCOPED_FILE_URL(@FROSTBYTE_RAW_STAGE, 'intro/order_detail.xlsx'), 'order_detail', 'ORDER_DETAIL');
-CALL LOAD_EXCEL_WORKSHEET_TO_TABLE_SP(BUILD_SCOPED_FILE_URL(@FROSTBYTE_RAW_STAGE, 'intro/location.xlsx'), 'location', 'LOCATION');
+CALL LOAD_EXCEL_WORKSHEET_TO_TABLE_SP(
+    BUILD_SCOPED_FILE_URL(@FROSTBYTE_RAW_STAGE, 'intro/order_detail.xlsx'), 'order_detail', 'ORDER_DETAIL');
+CALL LOAD_EXCEL_WORKSHEET_TO_TABLE_SP(
+    BUILD_SCOPED_FILE_URL(@FROSTBYTE_RAW_STAGE, 'intro/location.xlsx'), 'location', 'LOCATION');
 
 DESCRIBE TABLE ORDER_DETAIL;
 SELECT * FROM ORDER_DETAIL;

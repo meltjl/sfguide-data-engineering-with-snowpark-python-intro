@@ -8,17 +8,25 @@
 # SNOWFLAKE ADVANTAGE: Snowpark Python API
 # SNOWFLAKE ADVANTAGE: Snowpark Python Task DAG API
 
+'''
+ 20240225 mel's note. https://www.geeksforgeeks.org/python-import-module-from-different-directory/
+ if wncounter error     
+    from utils import snowpark_utils
+    ModuleNotFoundError: No module named 'utils'
+
+
+'''
 
 from datetime import timedelta
 
-#from snowflake.connector import connect
+import json
+from snowflake.connector import connect
 from snowflake.snowpark import Session
 from snowflake.snowpark import functions as F
 
 from snowflake.core import Root
 from snowflake.core.task import StoredProcedureCall, Task
 from snowflake.core.task.dagv1 import DAGOperation, DAG, DAGTask
-
 
 # Alternative way to create the tasks
 def create_tasks_procedurally(session: Session) -> str:
@@ -72,6 +80,9 @@ def create_tasks_procedurally(session: Session) -> str:
 
 # Create the tasks using the DAG API
 def main(session: Session) -> str:
+
+   
+    # print(Session)
     database_name = "HOL_DB"
     schema_name = "HOL_SCHEMA"
     warehouse_name = "HOL_WH"
@@ -113,10 +124,28 @@ if __name__ == '__main__':
     # Add the utils package to our path and import the snowpark_utils function
     current_dir = os.getcwd()
     parent_dir = os.path.dirname(current_dir)
-    sys.path.append(parent_dir)
+    # sys.path.append( parent_dir)
 
-    from utils import snowpark_utils
+    # sys.path.append('C:/Users/User/Documents/tmp_repo/application/folder1')
+    # import file1
+
+    # sys.path.append('C:/Users/User/Documents/tmp_repo/sfguide-data-engineering-with-snowpark-python-intro/utils')
+    # print('sys.path', sys.path)
+
+    import snowpark_utils
+
     session = snowpark_utils.get_snowpark_session()
+
+
+    # import json
+    # with open('C:\\Users\\User\\Documents\\tmp_repo\\creds.json') as f:
+    #     connection_parameters = json.load(f)
+
+
+    # session = Session.builder.configs(connection_parameters).create()
+    # print(f"Current Database and schema: {session.get_fully_qualified_current_schema()}")
+    # print(f"Current Warehouse: {session.get_current_warehouse()}")
+
 
     if len(sys.argv) > 1:
         print(main(session, *sys.argv[1:]))  # type: ignore
@@ -124,3 +153,4 @@ if __name__ == '__main__':
         print(main(session))  # type: ignore
 
     session.close()
+
